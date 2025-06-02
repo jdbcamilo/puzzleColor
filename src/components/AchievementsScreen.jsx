@@ -9,7 +9,7 @@ const AchievementsScreen = ({ achievements, scores, setGameState, settings = { t
   const allAchievements = getAchievementDefinitions();
   const unlockedIds = new Set(achievements.map(a => a.id));
   const categorizedAchievements = getAchievementsByCategory(allAchievements);
-  const settings = { theme: 'light' },
+
   
   const categoryNames = {
     inicio: '🎮 Primeros Pasos',
