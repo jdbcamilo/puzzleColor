@@ -1,0 +1,42 @@
+{
+  "name": "memory-path-game",
+  "version": "1.0.0",
+  "description": "Juego de memoria interactivo donde los jugadores deben recordar y recrear secuencias de colores en una grilla",
+  "main": "src/App.js",
+  "dependencies": {
+    "lucide-react": "^0.263.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.5.0",
+    "vite": "^6.3.5"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0"
+  },
+  "keywords": [
+    "react",
+    "game",
+    "memory",
+    "puzzle",
+    "interactive"
+  ],
+  "author": "Tu Nombre",
+  "license": "MIT",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
