@@ -1,0 +1,61 @@
+{
+  "name": "puzzlecolor",
+  "version": "1.0.0",
+  "description": "Juego de memoria interactivo donde los jugadores deben recordar y recrear secuencias de colores en una grilla",
+  "type": "module",
+  "main": "src/main.jsx",
+  "homepage": "https://jdbcamilo.github.io/puzzleColor",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview --host",
+    "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
+    "clean": "rm -rf dist node_modules/.vite",
+    "start": "npm run dev"
+  },
+  "keywords": [
+    "react",
+    "game",
+    "memory",
+    "puzzle",
+    "interactive",
+    "vite",
+    "github-pages"
+  ],
+  "author": "JuanDiaz",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "lucide-react": "^0.263.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.34.2",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.7",
+    "gh-pages": "^6.1.1",
+    "vite": "^5.3.4"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  }
+}

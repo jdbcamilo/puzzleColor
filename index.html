@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎮 Juego de Memoria - Memory Path Game</title>
+  <meta name="description" content="Juego interactivo de memoria donde debes recordar y recrear secuencias de colores en una grilla. ¡Desafía tu memoria!">
+  <meta name="keywords" content="juego, memoria, puzzle, react, interactivo, colores, secuencia">
+  <meta name="author" content="Memory Path Game">
+  
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="🎮 Juego de Memoria - Memory Path Game">
+  <meta property="og:description" content="Desafía tu memoria con este juego interactivo de secuencias de colores">
+  <meta property="og:image" content="/og-image.png">
+  
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:title" content="🎮 Juego de Memoria - Memory Path Game">
+  <meta property="twitter:description" content="Desafía tu memoria con este juego interactivo de secuencias de colores">
+  <meta property="twitter:image" content="/og-image.png">
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <style>
+    #root {
+      min-height: 100vh;
+    }
+    
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+    
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+      margin-right: 1rem;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div id="root">
+    <div class="loading">
+      <div class="loading-spinner"></div>
+      <div>Cargando Juego de Memoria...</div>
+    </div>
+  </div>
+  
+  <script type="module" src="/src/main.jsx"></script>
+  
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(registration => {
+            console.log('SW registered: ', registration);
+          })
+          .catch(registrationError => {
+            console.log('SW registration failed: ', registrationError);
+          });
+      });
+    }
+  </script>
+</body>
+</html>
