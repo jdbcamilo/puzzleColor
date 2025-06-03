@@ -10,7 +10,3 @@ root.render(
     <MemoryPathGame />
   </React.StrictMode>
 );
-
-if (import.meta.hot) {
-  import.meta.hot.accept();
-}

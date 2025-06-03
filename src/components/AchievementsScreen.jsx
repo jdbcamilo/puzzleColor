@@ -9,7 +9,7 @@ const AchievementsScreen = ({ achievements, scores, setGameState, settings = { t
   const allAchievements = getAchievementDefinitions();
   const unlockedIds = new Set(achievements.map(a => a.id));
   const categorizedAchievements = getAchievementsByCategory(allAchievements);
-
+  // Removed duplicate settings declaration - using the one from props
   
   const categoryNames = {
     inicio: '🎮 Primeros Pasos',
@@ -448,48 +448,5 @@ const AchievementsScreen = ({ achievements, scores, setGameState, settings = { t
     </div>
   );
 };
-
-const getThemeStyles = () => {
-  const themeStyles = {
-    light: {
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-      cardBg: 'rgba(255,255,255,0.95)',
-      textPrimary: '#4a5568',
-      textSecondary: '#64748b',
-      border: '#e2e8f0'
-    },
-    dark: {
-      background: 'linear-gradient(135deg, #2d3748 0%, #1a202c 100%)',
-      cardBg: 'rgba(45,55,72,0.95)',
-      textPrimary: '#e2e8f0',
-      textSecondary: '#a0aec0',
-      border: '#4a5568'
-    },
-    blue: {
-      background: 'linear-gradient(135deg, #4299e1 0%, #3182ce 100%)',
-      cardBg: 'rgba(237,242,247,0.95)',
-      textPrimary: '#2d3748',
-      textSecondary: '#4a5568',
-      border: '#cbd5e0'
-    },
-    green: {
-      background: 'linear-gradient(135deg, #48bb78 0%, #38a169 100%)',
-      cardBg: 'rgba(240,253,244,0.95)',
-      textPrimary: '#276749',
-      textSecondary: '#38a169',
-      border: '#9ae6b4'
-    },
-    purple: {
-      background: 'linear-gradient(135deg, #9f7aea 0%, #805ad5 100%)',
-      cardBg: 'rgba(250,245,255,0.95)',
-      textPrimary: '#553c9a',
-      textSecondary: '#6b46c1',
-      border: '#c4b5fd'
-    }
-  };
-  return themeStyles[settings.theme] || themeStyles.light;
-};
-
-const currentTheme = getThemeStyles();
 
 export default AchievementsScreen;

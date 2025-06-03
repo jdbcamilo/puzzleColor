@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
-import WelcomeScreen from './components/WelcomeScreen';
-import SetupScreen from './components/SetupScreen';
-import ShowingScreen from './components/ShowingScreen';
-import PlayingScreen from './components/PlayingScreen';
-import ResultScreen from './components/ResultScreen';
-import SettingsScreen from './components/SettingsScreen';
-import AchievementsScreen from './components/AchievementsScreen';
-import { generateRandomPath, calculateScore } from './utils/gameUtils';
+import WelcomeScreen from './components/WelcomeScreen.jsx';
+import SetupScreen from './components/SetupScreen.jsx';
+import ShowingScreen from './components/ShowingScreen.jsx';
+import PlayingScreen from './components/PlayingScreen.jsx';
+import ResultScreen from './components/ResultScreen.jsx';
+import SettingsScreen from './components/SettingsScreen.jsx';
+import AchievementsScreen from './components/AchievementsScreen.jsx';
+import { generateRandomPath, calculateScore } from './utils/gameUtils.jsx';
 import { 
   exportScores, 
   importScores, 
@@ -14,12 +14,12 @@ import {
   loadScoresFromLocal, 
   clearAllScores,
   createAutoBackup 
-} from './utils/fileUtils';
+} from './utils/fileUtils.jsx';
 import { 
   loadSettings, 
   saveSettings, 
   getDefaultSettings 
-} from './utils/settingsUtils';
+} from './utils/settingsUtils.jsx';
 import { 
   loadAchievements, 
   saveAchievements, 
@@ -29,7 +29,7 @@ import {
   playWinSound, 
   playLoseSound, 
   playStartSound 
-} from './utils/soundUtils';
+} from './utils/soundUtils.jsx';
 import './styles/App.css';
 
 const MemoryPathGame = () => {
@@ -49,53 +49,81 @@ const MemoryPathGame = () => {
 
   // Cargar datos al iniciar la aplicación
   useEffect(() => {
-    const savedScores = loadScoresFromLocal();
-    const savedSettings = loadSettings();
-    const savedAchievements = loadAchievements();
-    
-    setScores(savedScores);
-    setSettings(savedSettings);
-    setAchievements(savedAchievements);
+    try {
+      const savedScores = loadScoresFromLocal();
+      const savedSettings = loadSettings();
+      const savedAchievements = loadAchievements();
+      
+      setScores(savedScores);
+      setSettings(savedSettings);
+      setAchievements(savedAchievements);
+    } catch (error) {
+      console.error('Error loading data:', error);
+      // Usar valores por defecto si hay error
+      setScores([]);
+      setSettings(getDefaultSettings());
+      setAchievements([]);
+    }
   }, []);
 
   // Guardar automáticamente cuando cambian los puntajes
   useEffect(() => {
     if (scores.length > 0) {
-      saveScoresToLocal(scores);
+      try {
+        saveScoresToLocal(scores);
+      } catch (error) {
+        console.error('Error saving scores:', error);
+      }
     }
   }, [scores]);
 
   // Guardar configuración cuando cambia
   useEffect(() => {
-    saveSettings(settings);
+    try {
+      saveSettings(settings);
+    } catch (error) {
+      console.error('Error saving settings:', error);
+    }
   }, [settings]);
 
   // Guardar logros cuando cambian
   useEffect(() => {
-    saveAchievements(achievements);
+    try {
+      saveAchievements(achievements);
+    } catch (error) {
+      console.error('Error saving achievements:', error);
+    }
   }, [achievements]);
 
   // Detectar cuando se va a cerrar/recargar la página
   useEffect(() => {
     const handleBeforeUnload = (e) => {
-      if (scores.length > 0) {
-        saveScoresToLocal(scores);
-        // Crear respaldo automático si hay muchos puntajes
-        if (scores.length >= 10) {
-          createAutoBackup(scores);
-        }
-      }
-      saveSettings(settings);
-      saveAchievements(achievements);
-    };
-
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === 'hidden') {
+      try {
         if (scores.length > 0) {
           saveScoresToLocal(scores);
+          // Crear respaldo automático si hay muchos puntajes
+          if (scores.length >= 10) {
+            createAutoBackup(scores);
+          }
         }
         saveSettings(settings);
         saveAchievements(achievements);
+      } catch (error) {
+        console.error('Error saving data on unload:', error);
+      }
+    };
+
+    const handleVisibilityChange = () => {
+      try {
+        if (document.visibilityState === 'hidden') {
+          if (scores.length > 0) {
+            saveScoresToLocal(scores);
+          }
+          saveSettings(settings);
+          saveAchievements(achievements);
+        }
+      } catch (error) {
+        console.error('Error saving data on visibility change:', error);
       }
     };
 
@@ -114,12 +142,25 @@ const MemoryPathGame = () => {
       return;
     }
     
-    if (settings.soundEnabled) {
-      playStartSound();
+    try {
+      if (settings.soundEnabled) {
+        playStartSound();
+      }
+    } catch (error) {
+      console.error('Error playing start sound:', error);
     }
     
     if (!customMode) {
-      setCurrentPath(generateRandomPath(difficulty));
+      try {
+        setCurrentPath(generateRandomPath(difficulty));
+      } catch (error) {
+        console.error('Error generating path:', error);
+        // Generar un path simple por defecto
+        setCurrentPath([
+          { row: 0, col: 0, color: '#FF6B6B' },
+          { row: 1, col: 1, color: '#4ECDC4' }
+        ]);
+      }
     }
     
     setPlayerPath([]);
@@ -181,15 +222,23 @@ const MemoryPathGame = () => {
           setScores(prev => {
             const updatedScores = [...prev, newScore];
             // Verificar logros después de agregar el puntaje
-            const newAchievements = checkAchievements(updatedScores, achievements);
-            if (newAchievements.length > achievements.length) {
-              setAchievements(newAchievements);
+            try {
+              const newAchievements = checkAchievements(updatedScores, achievements);
+              if (newAchievements.length > achievements.length) {
+                setAchievements(newAchievements);
+              }
+            } catch (error) {
+              console.error('Error checking achievements:', error);
             }
             return updatedScores;
           });
           
-          if (settings.soundEnabled) {
-            playWinSound();
+          try {
+            if (settings.soundEnabled) {
+              playWinSound();
+            }
+          } catch (error) {
+            console.error('Error playing win sound:', error);
           }
           
           setGameState('result');
@@ -197,8 +246,12 @@ const MemoryPathGame = () => {
       } else {
         setPlayerPath(prev => [...prev, { row, col, color: '#FF0000', correct: false }]);
         
-        if (settings.soundEnabled) {
-          playLoseSound();
+        try {
+          if (settings.soundEnabled) {
+            playLoseSound();
+          }
+        } catch (error) {
+          console.error('Error playing lose sound:', error);
         }
         
         setTimeout(() => {
@@ -216,9 +269,13 @@ const MemoryPathGame = () => {
           setScores(prev => {
             const updatedScores = [...prev, newScore];
             // Verificar logros después de agregar el puntaje
-            const newAchievements = checkAchievements(updatedScores, achievements);
-            if (newAchievements.length > achievements.length) {
-              setAchievements(newAchievements);
+            try {
+              const newAchievements = checkAchievements(updatedScores, achievements);
+              if (newAchievements.length > achievements.length) {
+                setAchievements(newAchievements);
+              }
+            } catch (error) {
+              console.error('Error checking achievements:', error);
             }
             return updatedScores;
           });
@@ -238,15 +295,30 @@ const MemoryPathGame = () => {
   };
 
   const handleExportScores = () => {
-    exportScores(scores);
+    try {
+      exportScores(scores);
+    } catch (error) {
+      console.error('Error exporting scores:', error);
+      alert('Error al exportar puntajes');
+    }
   };
 
   const handleImportScores = (event) => {
-    importScores(event, setScores);
+    try {
+      importScores(event, setScores);
+    } catch (error) {
+      console.error('Error importing scores:', error);
+      alert('Error al importar puntajes');
+    }
   };
 
   const handleClearScores = () => {
-    clearAllScores(setScores);
+    try {
+      clearAllScores(setScores);
+    } catch (error) {
+      console.error('Error clearing scores:', error);
+      alert('Error al limpiar puntajes');
+    }
   };
 
   const updateSettings = (newSettings) => {
@@ -264,7 +336,11 @@ const MemoryPathGame = () => {
 
   // Aplicar tema al body
   useEffect(() => {
-    document.body.className = `theme-${settings.theme}`;
+    try {
+      document.body.className = `theme-${settings.theme}`;
+    } catch (error) {
+      console.error('Error applying theme:', error);
+    }
   }, [settings.theme]);
 
   switch (gameState) {
