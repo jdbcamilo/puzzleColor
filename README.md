@@ -11,6 +11,9 @@ Un juego interactivo de memoria desarrollado en React donde los jugadores deben 
 - **Exportación/Importación**: Respaldo de puntajes en formato CSV
 - **Diseño responsive**: Compatible con dispositivos móviles y desktop
 - **Interfaz moderna**: Gradientes, animaciones y efectos visuales
+- **Temas visuales**: Cambia el esquema de colores desde la configuración
+- **Efectos de sonido**: Feedback auditivo durante el juego
+- **Sistema de logros**: Desbloquea logros por desempeño o progresión
 
 ## 🎯 Cómo Jugar
 
@@ -43,6 +46,11 @@ Un juego interactivo de memoria desarrollado en React donde los jugadores deben 
 - Top 5 de mejores puntajes
 - Opciones para jugar nuevamente
 
+### Temas y Logros
+- Selector de temas visuales en pantalla de configuración
+- Pantalla de logros con distintivos desbloqueables
+- Efectos sonoros al completar acciones clave
+
 ## 🏆 Sistema de Puntuación
 
 La puntuación se calcula basada en:
@@ -71,10 +79,10 @@ La puntuación se calcula basada en:
 ### Pasos de Instalación
 ```bash
 # Clonar el repositorio
-git clone https://github.com/tuusuario/memory-path-game.git
+git clone https://github.com/jdbcamilo/puzzleColor
 
 # Navegar al directorio
-cd memory-path-game
+cd puzzleColor
 
 # Instalar dependencias
 npm install
@@ -101,19 +109,21 @@ memory-path-game/
 │   └── favicon.ico
 ├── src/
 │   ├── components/
-│   │   ├── WelcomeScreen.jsx    # Pantalla principal
-│   │   ├── SetupScreen.jsx      # Configuración del juego
-│   │   ├── ShowingScreen.jsx    # Fase de memorización
-│   │   ├── PlayingScreen.jsx    # Fase de juego
-│   │   ├── ResultScreen.jsx     # Resultados
-│   │   └── GameGrid.jsx         # Grilla del juego
+│   │   ├── ArchievementsScreen.jsx
+│   │   ├── WelcomeScreen.jsx
+│   │   ├── SetupScreen.jsx
+│   │   ├── SettingsScreen.jsx
+│   │   ├── ShowingScreen.jsx
+│   │   ├── PlayingScreen.jsx
+│   │   ├── ResultScreen.jsx
+│   │   └── GameGrid.jsx
 │   ├── utils/
-│   │   ├── gameUtils.js         # Lógica del juego
-│   │   └── fileUtils.js         # Manejo de archivos
+│   │   ├── gameUtils.js
+│   │   └── fileUtils.js
 │   ├── styles/
-│   │   └── App.css              # Estilos principales
-│   ├── MemoryPathGame.jsx       # Componente principal
-│   └── main.jsx                 # Punto de entrada
+│   │   └── App.css
+│   ├── MemoryPathGame.jsx
+│   └── main.jsx
 ├── package.json
 ├── vite.config.js
 └── README.md
@@ -122,54 +132,34 @@ memory-path-game/
 ## 🎮 Características Técnicas
 
 ### Gestión de Estado
-- **useState**: Manejo de estado local de componentes
-- **useEffect**: Efectos secundarios y ciclo de vida
-- **useRef**: Referencias a elementos DOM
+- **useState**, **useEffect**, **useRef**
 
 ### Persistencia de Datos
-- **Auto-guardado**: Los puntajes se guardan automáticamente
-- **Respaldo automático**: Crea respaldos cuando hay 10+ puntajes
-- **Formato de exportación**: CSV compatible con Excel
+- **LocalStorage** con respaldo automático
+- **Formato CSV** para exportar/importar
 
 ### Responsive Design
-- **Breakpoints**: 768px (móvil), 1024px (tablet)
-- **Grid adaptativo**: La grilla se ajusta al tamaño de pantalla
-- **Botones táctiles**: Optimizados para dispositivos móviles
+- **Breakpoints** y **grid adaptativo**
+- Botones optimizados para dispositivos móviles
+
+### Temas Visuales y Sonido
+- Cambia temas desde configuración
+- Efectos sonoros con opción de desactivar
+
+### Sistema de Logros
+- Basado en precisión, partidas jugadas y récords
 
 ## 📊 Funcionalidades de Datos
 
-### Exportación de Puntajes
-- Formato CSV con headers en español
-- Incluye: Nombre, Puntaje, Dificultad, Longitud, Fecha
-- Nombre de archivo con timestamp
-
-### Importación de Puntajes
-- Soporte para archivos CSV
-- Validación de formato automática
-- Combinación con puntajes existentes
-
-### Estadísticas
-- Total de partidas jugadas
-- Mejor puntaje alcanzado
+💾 Puntajes guardados localmente con estadísticas como:
+- Total de partidas
 - Promedio de puntuación
-- Distribución por dificultad
+- Mejores jugadores
 
 ## 🎨 Diseño Visual
 
-### Paleta de Colores
-- **Gradientes dinámicos**: Cada pantalla tiene su gradiente único
-- **Colores de juego**: 10 colores vibrantes predefinidos
-- **Retroalimentación visual**: Verde para correcto, rojo para incorrecto
-
-### Animaciones
-- **Transiciones suaves**: 0.2-0.3 segundos
-- **Efectos hover**: Elevación y escalado
-- **Progreso visual**: Barras de progreso animadas
-
-### Iconografía
-- **Lucide React**: Iconos consistentes y modernos
-- **Contextuales**: Cada acción tiene su icono apropiado
-- **Escalables**: Adaptables a diferentes tamaños
+- Gradientes, animaciones y retroalimentación visual
+- Iconografía con **Lucide React**
 
 ## 🔧 Configuración Avanzada
 
@@ -180,79 +170,55 @@ VITE_APP_TITLE="Juego de Memoria"
 VITE_APP_VERSION="1.0.0"
 ```
 
-### Personalización de Dificultades
+### Personalización de Dificultades y Colores
 ```javascript
-// En gameUtils.js
 const DIFFICULTIES = {
   easy: { steps: 4, name: 'Fácil', bonus: 1 },
   medium: { steps: 6, name: 'Medio', bonus: 1.5 },
   hard: { steps: 8, name: 'Difícil', bonus: 2 }
 };
-```
 
-### Colores Personalizados
-```javascript
-// En gameUtils.js
 const COLORS = [
-  '#FF6B6B', '#4ECDC4', '#45B7D1', 
+  '#FF6B6B', '#4ECDC4', '#45B7D1',
   '#96CEB4', '#FFEAA7', '#DDA0DD',
-  // Agrega más colores aquí
 ];
 ```
 
 ## ✨ Próximas Funcionalidades
 
-- [ ] **Modo multijugador**: Competencia en tiempo real
-- [ ] **Temas visuales**: Diferentes esquemas de colores
-- [ ] **Efectos de sonido**: Retroalimentación auditiva
-- [ ] **Logros**: Sistema de achievements
-- [ ] **Tutorial interactivo**: Guía paso a paso
-- [ ] **Estadísticas avanzadas**: Gráficos de progreso
+- [x] Temas visuales
+- [x] Efectos de sonido
+- [x] Logros
+- [ ] Modo multijugador
+- [ ] Tutorial interactivo
+- [ ] Estadísticas avanzadas
 
 ## 🐛 Solución de Problemas
 
 ### Problemas Comunes
 
 **El juego no carga**
-- Verifica que Node.js esté instalado correctamente
-- Ejecuta `npm install` para instalar dependencias
+- Verifica que Node.js esté instalado
+- Ejecuta `npm install`
 
 **Los puntajes no se guardan**
-- Verifica que localStorage esté habilitado en el navegador
-- Comprueba la consola del navegador por errores
-
-**La importación CSV falla**
-- Asegúrate de que el archivo tenga el formato correcto
-- Verifica que los headers estén en español
+- Asegúrate de tener habilitado localStorage
+- Verifica la consola por errores
 
 ## 📄 Licencia
 
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
+MIT
 
 ## 👥 Contribuciones
 
-Las contribuciones son bienvenidas. Por favor:
-
-1. Haz fork del proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
+1. Fork
+2. Crea una rama
+3. Haz commit
+4. Abre un Pull Request
 
 ## 📞 Contacto
 
-- **Desarrollador**: [Tu Nombre]
-- **Email**: tu.email@ejemplo.com
-- **GitHub**: [@tuusuario](https://github.com/tuusuario)
-- **Demo**: [Ver Demo en Vivo](https://tu-demo-url.com)
-
-## 🙏 Agradecimientos
-
-- **React Team**: Por el increíble framework
-- **Lucide**: Por los hermosos iconos
-- **Vite**: Por la herramienta de construcción ultrarrápida
-- **Comunidad Open Source**: Por la inspiración y recursos
-
----
+**Desarrollador**: JuanDev  
+**GitHub**: https://github.com/jdcamilo
 
 **¡Diviértete jugando y desafiando tu memoria!** 🧠✨
