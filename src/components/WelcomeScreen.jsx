@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 
 const WelcomeScreen = ({
@@ -24,6 +23,18 @@ const WelcomeScreen = ({
   const [showNewAchievements, setShowNewAchievements] = useState(false);
   const [customTime, setCustomTime] = useState(3);
   const [showCustomTime, setShowCustomTime] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Detectar si es dispositivo móvil
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkIsMobile();
+    window.addEventListener('resize', checkIsMobile);
+    return () => window.removeEventListener('resize', checkIsMobile);
+  }, []);
 
   const getThemeStyles = () => {
     const themeStyles = {
@@ -127,25 +138,27 @@ const WelcomeScreen = ({
     <div style={{
       minHeight: '100vh',
       background: currentTheme.background, 
-      padding: '20px',
-      fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
+      padding: isMobile ? '15px' : '20px',
+      fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+      overflowX: 'hidden'
     }}>
       {/* Notificación de nuevos logros */}
       {showNewAchievements && newAchievements.length > 0 && (
         <div style={{
           position: 'fixed',
           top: '20px',
-          right: '20px',
+          right: isMobile ? '10px' : '20px',
+          left: isMobile ? '10px' : 'auto',
           background: currentTheme.cardBg, 
           color: currentTheme.textPrimary,
-          padding: '20px',
+          padding: isMobile ? '15px' : '20px',
           borderRadius: '16px',
           boxShadow: '0 20px 40px rgba(0,0,0,0.15)',
           zIndex: 1000,
-          maxWidth: '300px',
+          maxWidth: isMobile ? 'calc(100% - 20px)' : '300px',
           animation: 'slideIn 0.5s ease-out'
         }}>
-          <h3 style={{ margin: '0 0 10px 0', fontSize: '1.1rem' }}>🏆 ¡Nuevo Logro!</h3>
+          <h3 style={{ margin: '0 0 10px 0', fontSize: isMobile ? '1rem' : '1.1rem' }}>🏆 ¡Nuevo Logro!</h3>
           {newAchievements.map(achievement => (
             <div key={achievement.id} style={{ 
               display: 'flex', 
@@ -155,8 +168,8 @@ const WelcomeScreen = ({
             }}>
               <span style={{ fontSize: '1.5rem' }}>{achievement.icon}</span>
               <div>
-                <strong style={{ display: 'block', fontSize: '0.9rem' }}>{achievement.name}</strong>
-                <p style={{ margin: 0, fontSize: '0.8rem', opacity: 0.9 }}>{achievement.description}</p>
+                <strong style={{ display: 'block', fontSize: isMobile ? '0.85rem' : '0.9rem' }}>{achievement.name}</strong>
+                <p style={{ margin: 0, fontSize: isMobile ? '0.75rem' : '0.8rem', opacity: 0.9 }}>{achievement.description}</p>
               </div>
             </div>
           ))}
@@ -165,9 +178,9 @@ const WelcomeScreen = ({
 
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         {/* Header */}
-        <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+        <div style={{ textAlign: 'center', marginBottom: isMobile ? '25px' : '40px' }}>
           <h1 style={{
-            fontSize: '3rem',
+            fontSize: isMobile ? '2.2rem' : '3rem',
             fontWeight: '700',
             color: 'white',
             textShadow: '0 4px 8px rgba(0,0,0,0.3)',
@@ -176,7 +189,7 @@ const WelcomeScreen = ({
             🧠 puzzleColor
           </h1>
           <p style={{
-            fontSize: '1.2rem',
+            fontSize: isMobile ? '1rem' : '1.2rem',
             color: 'rgba(255,255,255,0.9)',
             fontWeight: '300',
             margin: 0
@@ -188,8 +201,8 @@ const WelcomeScreen = ({
         {/* Contenido principal */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'minmax(400px, 1fr) minmax(350px, 400px)',
-          gap: '30px',
+          gridTemplateColumns: isMobile ? '1fr' : 'minmax(400px, 1fr) minmax(350px, 400px)',
+          gap: isMobile ? '20px' : '30px',
           alignItems: 'start'
         }}>
           {/* Panel de configuración del juego */}
@@ -197,14 +210,14 @@ const WelcomeScreen = ({
             background: currentTheme.cardBg,
             backdropFilter: 'blur(10px)',
             borderRadius: '20px',
-            padding: '30px',
+            padding: isMobile ? '20px' : '30px',
             boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
             border: '1px solid rgba(255,255,255,0.2)'
           }}>
             <h2 style={{
-              fontSize: '1.5rem',
+              fontSize: isMobile ? '1.3rem' : '1.5rem',
               fontWeight: '600',
-              marginBottom: '25px',
+              marginBottom: isMobile ? '20px' : '25px',
               color: currentTheme.textPrimary,
               display: 'flex',
               alignItems: 'center',
@@ -214,7 +227,7 @@ const WelcomeScreen = ({
             </h2>
 
             {/* Nombre del jugador */}
-            <div style={{ marginBottom: '25px' }}>
+            <div style={{ marginBottom: isMobile ? '20px' : '25px' }}>
               <label style={{
                 display: 'block',
                 fontSize: '0.9rem',
@@ -247,7 +260,7 @@ const WelcomeScreen = ({
             </div>
 
             {/* Dificultad */}
-            <div style={{ marginBottom: '25px' }}>
+            <div style={{ marginBottom: isMobile ? '20px' : '25px' }}>
               <label style={{
                 display: 'block',
                 fontSize: '0.9rem',
@@ -257,7 +270,11 @@ const WelcomeScreen = ({
               }}>
                 🎯 Dificultad
               </label>
-              <div style={{ display: 'flex', gap: '8px' }}>
+              <div style={{ 
+                display: 'flex', 
+                gap: '8px',
+                flexDirection: isMobile ? 'column' : 'row'
+              }}>
                 {difficultyOptions.map(option => (
                   <button
                     key={option.value}
@@ -283,7 +300,7 @@ const WelcomeScreen = ({
             </div>
 
             {/* Tiempo de visualización */}
-            <div style={{ marginBottom: '25px' }}>
+            <div style={{ marginBottom: isMobile ? '20px' : '25px' }}>
               <label style={{
                 display: 'block',
                 fontSize: '0.9rem',
@@ -293,29 +310,57 @@ const WelcomeScreen = ({
               }}>
                 ⏱️ Tiempo de visualización
               </label>
-              <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-                {timeOptions.map(option => (
+              <div style={{ 
+                display: 'grid', 
+                gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(3, 1fr)',
+                gap: '6px'
+              }}>
+                {timeOptions.slice(0, 5).map(option => (
                   <button
                     key={option.value}
                     onClick={() => handleTimeSelection(option.value)}
                     style={{
-                      flex: option.value === 'custom' ? '100%' : 1,
                       padding: '10px 4px',
                       borderRadius: '10px',
-                      border: (showTime === option.value || (option.value === 'custom' && showCustomTime)) ? '2px solid #667eea' : `2px solid ${currentTheme.border}`,
-                      background: (showTime === option.value || (option.value === 'custom' && showCustomTime)) ? '#667eea15' : 'white',
-                      color: (showTime === option.value || (option.value === 'custom' && showCustomTime)) ? '#667eea' : currentTheme.textPrimary,
+                      border: (showTime === option.value) ? '2px solid #667eea' : `2px solid ${currentTheme.border}`,
+                      background: (showTime === option.value) ? '#667eea15' : 'white',
+                      color: (showTime === option.value) ? '#667eea' : currentTheme.textPrimary,
                       fontSize: '0.8rem',
                       fontWeight: '600',
                       cursor: 'pointer',
                       transition: 'all 0.2s',
-                      marginBottom: option.value === 'custom' ? '10px' : '0'
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center'
                     }}
                   >
                     <div style={{ fontSize: '1rem' }}>{option.icon}</div>
                     <div>{option.label}</div>
                   </button>
                 ))}
+                
+                {/* Botón de tiempo personalizado */}
+                <button
+                  onClick={() => handleTimeSelection('custom')}
+                  style={{
+                    padding: '10px 4px',
+                    borderRadius: '10px',
+                    border: showCustomTime ? '2px solid #667eea' : `2px solid ${currentTheme.border}`,
+                    background: showCustomTime ? '#667eea15' : 'white',
+                    color: showCustomTime ? '#667eea' : currentTheme.textPrimary,
+                    fontSize: '0.8rem',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gridColumn: isMobile ? 'span 2' : 'auto'
+                  }}
+                >
+                  <div style={{ fontSize: '1rem' }}>🎨</div>
+                  <div>Personalizado</div>
+                </button>
               </div>
               
               {/* Control de tiempo personalizado */}
@@ -369,7 +414,7 @@ const WelcomeScreen = ({
             </div>
 
             {/* Modo personalizado */}
-            <div style={{ marginBottom: '30px' }}>
+            <div style={{ marginBottom: isMobile ? '25px' : '30px' }}>
               <label style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -433,14 +478,14 @@ const WelcomeScreen = ({
             background: currentTheme.cardBg,
             backdropFilter: 'blur(10px)',
             borderRadius: '20px',
-            padding: '30px',
+            padding: isMobile ? '20px' : '30px',
             boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
             border: '1px solid rgba(255,255,255,0.2)'
           }}>
             <h2 style={{
-              fontSize: '1.5rem',
+              fontSize: isMobile ? '1.3rem' : '1.5rem',
               fontWeight: '600',
-              marginBottom: '25px',
+              marginBottom: isMobile ? '20px' : '25px',
               color: currentTheme.textPrimary,
               display: 'flex',
               alignItems: 'center',
@@ -482,7 +527,7 @@ const WelcomeScreen = ({
             {scores.length > 0 ? (
               <div>
                 <div style={{
-                  display: 'flex',
+                  display: isMobile ? 'none' : 'flex',
                   justifyContent: 'space-between',
                   padding: '12px 16px',
                   fontSize: '0.8rem',
@@ -505,43 +550,78 @@ const WelcomeScreen = ({
                         key={score.id || index}
                         style={{
                           display: 'flex',
-                          justifyContent: 'space-between',
-                          alignItems: 'center',
+                          flexDirection: isMobile ? 'column' : 'row',
+                          justifyContent: isMobile ? 'flex-start' : 'space-between',
+                          alignItems: isMobile ? 'flex-start' : 'center',
                           padding: '12px 16px',
                           borderBottom: `1px solid ${currentTheme.border}`,
                           fontSize: '0.85rem',
-                          background: index < 3 ? ['#fef7cd', '#fef3c7', '#fed7aa'][index] : 'transparent'
+                          background: index < 3 ? ['#fef7cd', '#fef3c7', '#fed7aa'][index] : 'transparent',
+                          gap: isMobile ? '8px' : '0'
                         }}
                       >
-                        <span style={{ 
+                        <div style={{ 
                           fontWeight: '700',
-                          color: index < 3 ? ['#92400e', '#92400e', '#9a3412'][index] : currentTheme.textSecondary
+                          color: index < 3 ? ['#92400e', '#92400e', '#9a3412'][index] : currentTheme.textSecondary,
+                          minWidth: isMobile ? 'auto' : '40px'
                         }}>
                           {index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `#${index + 1}`}
-                        </span>
-                        <span style={{ fontWeight: '600', color: currentTheme.textPrimary }}>{score.name}</span>
-                        <span style={{ 
-                          fontWeight: '700',
-                          color: '#10B981'
+                        </div>
+                        
+                        <div style={{ 
+                          display: 'flex', 
+                          justifyContent: 'space-between',
+                          width: isMobile ? '100%' : 'auto',
+                          alignItems: 'center'
                         }}>
-                          {score.score}
-                        </span>
-                        <span style={{
-                          padding: '4px 8px',
-                          borderRadius: '6px',
-                          fontSize: '0.7rem',
-                          fontWeight: '600',
-                          background: score.difficulty === 'easy' ? '#dcfce7' : 
-                                    score.difficulty === 'medium' ? '#fef3c7' : '#fee2e2',
-                          color: score.difficulty === 'easy' ? '#166534' : 
-                               score.difficulty === 'medium' ? '#92400e' : '#991b1b'
+                          <span style={{ 
+                            fontWeight: '600', 
+                            color: currentTheme.textPrimary,
+                            minWidth: isMobile ? 'auto' : '100px'
+                          }}>
+                            {score.name}
+                          </span>
+                          
+                          <span style={{ 
+                            fontWeight: '700',
+                            color: '#10B981',
+                            minWidth: isMobile ? '50px' : 'auto',
+                            textAlign: isMobile ? 'right' : 'left'
+                          }}>
+                            {score.score}
+                          </span>
+                        </div>
+                        
+                        <div style={{
+                          display: 'flex',
+                          justifyContent: isMobile ? 'space-between' : 'flex-start',
+                          width: isMobile ? '100%' : 'auto',
+                          alignItems: 'center',
+                          gap: isMobile ? '0' : '10px'
                         }}>
-                          {score.difficulty === 'easy' ? 'FÁCIL' : 
-                           score.difficulty === 'medium' ? 'MEDIO' : 'DIFÍCIL'}
-                        </span>
-                        <span style={{ fontSize: '0.75rem', color: currentTheme.textSecondary }}>
-                          {score.date || new Date().toLocaleDateString()}
-                        </span>
+                          <span style={{
+                            padding: '4px 8px',
+                            borderRadius: '6px',
+                            fontSize: '0.7rem',
+                            fontWeight: '600',
+                            background: score.difficulty === 'easy' ? '#dcfce7' : 
+                                      score.difficulty === 'medium' ? '#fef3c7' : '#fee2e2',
+                            color: score.difficulty === 'easy' ? '#166534' : 
+                                  score.difficulty === 'medium' ? '#92400e' : '#991b1b'
+                          }}>
+                            {score.difficulty === 'easy' ? 'FÁCIL' : 
+                            score.difficulty === 'medium' ? 'MEDIO' : 'DIFÍCIL'}
+                          </span>
+                          
+                          <span style={{ 
+                            fontSize: '0.75rem', 
+                            color: currentTheme.textSecondary,
+                            minWidth: isMobile ? '80px' : 'auto',
+                            textAlign: isMobile ? 'right' : 'left'
+                          }}>
+                            {score.date || new Date().toLocaleDateString()}
+                          </span>
+                        </div>
                       </div>
                     ))}
                 </div>
@@ -586,29 +666,14 @@ const WelcomeScreen = ({
         <div style={{
           display: 'flex',
           justifyContent: 'center',
-          gap: '20px',
-          marginTop: '30px'
+          gap: isMobile ? '10px' : '20px',
+          marginTop: '30px',
+          flexWrap: 'wrap'
         }}>
           <button
             onClick={() => setGameState?.('settings')}
             style={{
-              padding: '12px 24px',
-              borderRadius: '12px',
-              border: 'none',
-              background: 'rgba(255,255,255,0.9)',
-              color: '#4a5568',
-              fontWeight: '600',
-              cursor: 'pointer',
-              transition: 'all 0.2s',
-              boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
-            }}
-          >
-            ⚙️ Configuración
-          </button>
-          <button
-            onClick={() => setGameState?.('achievements')}
-            style={{
-              padding: '12px 24px',
+              padding: isMobile ? '10px 16px' : '12px 24px',
               borderRadius: '12px',
               border: 'none',
               background: 'rgba(255,255,255,0.9)',
@@ -617,7 +682,27 @@ const WelcomeScreen = ({
               cursor: 'pointer',
               transition: 'all 0.2s',
               boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-              position: 'relative'
+              flex: isMobile ? '1' : 'none',
+              minWidth: isMobile ? '140px' : 'auto'
+            }}
+          >
+            ⚙️ Configuración
+          </button>
+          <button
+            onClick={() => setGameState?.('achievements')}
+            style={{
+              padding: isMobile ? '10px 16px' : '12px 24px',
+              borderRadius: '12px',
+              border: 'none',
+              background: 'rgba(255,255,255,0.9)',
+              color: '#4a5568',
+              fontWeight: '600',
+              cursor: 'pointer',
+              transition: 'all 0.2s',
+              boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+              position: 'relative',
+              flex: isMobile ? '1' : 'none',
+              minWidth: isMobile ? '140px' : 'auto'
             }}
           >
             🏆 Logros
@@ -640,6 +725,42 @@ const WelcomeScreen = ({
                 {newAchievements.length}
               </span>
             )}
+          </button>
+          <button
+            onClick={handleExportScores}
+            style={{
+              padding: isMobile ? '10px 16px' : '12px 24px',
+              borderRadius: '12px',
+              border: 'none',
+              background: 'rgba(255,255,255,0.9)',
+              color: '#4a5568',
+              fontWeight: '600',
+              cursor: 'pointer',
+              transition: 'all 0.2s',
+              boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+              flex: isMobile ? '1' : 'none',
+              minWidth: isMobile ? '140px' : 'auto'
+            }}
+          >
+            💾 Exportar
+          </button>
+          <button
+            onClick={handleClearScoresWithConfirm}
+            style={{
+              padding: isMobile ? '10px 16px' : '12px 24px',
+              borderRadius: '12px',
+              border: 'none',
+              background: 'rgba(255,255,255,0.9)',
+              color: '#4a5568',
+              fontWeight: '600',
+              cursor: 'pointer',
+              transition: 'all 0.2s',
+              boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+              flex: isMobile ? '1' : 'none',
+              minWidth: isMobile ? '140px' : 'auto'
+            }}
+          >
+            🗑️ Limpiar
           </button>
         </div>
       </div>

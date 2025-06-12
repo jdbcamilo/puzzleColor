@@ -15,10 +15,17 @@ const ShowingScreen = ({
           <h2 className="screen-title memorize-title">
             ¡Memoriza el Camino!
           </h2>
-          <div className="timer-display">{timer}</div>
           <p className="instruction-text">
             Recuerda la secuencia y los colores...
           </p>
+        </div>
+        
+        {/* Timer flotante estilo popup */}
+        <div className="floating-timer-panel">
+          <div className="timer-content">
+            <span className="timer-label">Tiempo</span>
+            <div className="timer-value">{timer}</div>
+          </div>
         </div>
         
         <GameGrid

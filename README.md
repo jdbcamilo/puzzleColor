@@ -71,10 +71,10 @@ La puntuación se calcula basada en:
 ### Pasos de Instalación
 ```bash
 # Clonar el repositorio
-git clone https://github.com/tuusuario/memory-path-game.git
+git clone https://github.com/jdbcamilo/puzzleColor
 
 # Navegar al directorio
-cd memory-path-game
+cd puzzleColor
 
 # Instalar dependencias
 npm install
@@ -101,12 +101,14 @@ memory-path-game/
 │   └── favicon.ico
 ├── src/
 │   ├── components/
-│   │   ├── WelcomeScreen.jsx    # Pantalla principal
-│   │   ├── SetupScreen.jsx      # Configuración del juego
-│   │   ├── ShowingScreen.jsx    # Fase de memorización
-│   │   ├── PlayingScreen.jsx    # Fase de juego
-│   │   ├── ResultScreen.jsx     # Resultados
-│   │   └── GameGrid.jsx         # Grilla del juego
+│   │   ├── ArchievementsScreen.jsx      # Sistema de Logros
+│   │   ├── WelcomeScreen.jsx            # Pantalla principal
+│   │   ├── SetupScreen.jsx              # Configuración del juego
+│   │   ├── SettingsScreen.jsx           # Configuracion de los temas
+│   │   ├── ShowingScreen.jsx            # Fase de memorización
+│   │   ├── PlayingScreen.jsx            # Fase de juego
+│   │   ├── ResultScreen.jsx             # Resultados
+│   │   └── GameGrid.jsx                 # Grilla del juego
 │   ├── utils/
 │   │   ├── gameUtils.js         # Lógica del juego
 │   │   └── fileUtils.js         # Manejo de archivos
@@ -128,8 +130,7 @@ memory-path-game/
 
 ### Persistencia de Datos
 - **Auto-guardado**: Los puntajes se guardan automáticamente
-- **Respaldo automático**: Crea respaldos cuando hay 10+ puntajes
-- **Formato de exportación**: CSV compatible con Excel
+
 
 ### Responsive Design
 - **Breakpoints**: 768px (móvil), 1024px (tablet)
@@ -137,16 +138,8 @@ memory-path-game/
 - **Botones táctiles**: Optimizados para dispositivos móviles
 
 ## 📊 Funcionalidades de Datos
-
-### Exportación de Puntajes
-- Formato CSV con headers en español
-- Incluye: Nombre, Puntaje, Dificultad, Longitud, Fecha
-- Nombre de archivo con timestamp
-
-### Importación de Puntajes
-- Soporte para archivos CSV
-- Validación de formato automática
-- Combinación con puntajes existentes
+💾 Los puntajes se guardan localmente en el navegador (almacenamiento local).
+No se utiliza base de datos externa ni servidor: todo funciona directamente desde esta página alojada en GitHub.
 
 ### Estadísticas
 - Total de partidas jugadas
@@ -221,9 +214,7 @@ const COLORS = [
 - Verifica que localStorage esté habilitado en el navegador
 - Comprueba la consola del navegador por errores
 
-**La importación CSV falla**
-- Asegúrate de que el archivo tenga el formato correcto
-- Verifica que los headers estén en español
+
 
 ## 📄 Licencia
 
@@ -241,18 +232,8 @@ Las contribuciones son bienvenidas. Por favor:
 
 ## 📞 Contacto
 
-- **Desarrollador**: [Tu Nombre]
-- **Email**: tu.email@ejemplo.com
-- **GitHub**: [@tuusuario](https://github.com/tuusuario)
-- **Demo**: [Ver Demo en Vivo](https://tu-demo-url.com)
+- **Desarrollador**: JuanDev
+- **GitHub**: https://github.com/jdcamilo
 
-## 🙏 Agradecimientos
-
-- **React Team**: Por el increíble framework
-- **Lucide**: Por los hermosos iconos
-- **Vite**: Por la herramienta de construcción ultrarrápida
-- **Comunidad Open Source**: Por la inspiración y recursos
-
----
 
 **¡Diviértete jugando y desafiando tu memoria!** 🧠✨

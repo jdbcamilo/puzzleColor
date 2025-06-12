@@ -717,3 +717,77 @@ body {
   --border-color: #64b5f6;
   --hover-bg: #bbdefb;
 }
+/* Timer flotante estilo popup panel */
+.floating-timer-panel {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 15px;
+  padding: 12px 20px;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: 1000;
+  min-width: 100px;
+  animation: slideInTimer 0.5s ease-out;
+}
+
+.timer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.timer-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.timer-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  font-family: 'Courier New', monospace;
+}
+
+@keyframes slideInTimer {
+  from {
+    transform: translateX(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive para pantallas pequeñas */
+@media (max-width: 768px) {
+  .floating-timer-panel {
+    top: 10px;
+    right: 10px;
+    padding: 8px 16px;
+  }
+  
+  .timer-value {
+    font-size: 1.25rem;
+  }
+  
+  .timer-label {
+    font-size: 0.7rem;
+  }
+}
+
+/* Efecto hover opcional */
+.floating-timer-panel:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s ease;
+}

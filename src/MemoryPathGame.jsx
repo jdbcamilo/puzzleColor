@@ -24,7 +24,7 @@ import {
   loadAchievements, 
   saveAchievements, 
   checkAchievements 
-} from './utils/achievementsUtils.jsx';
+} from './utils/achievementsUtils';
 import { 
   playWinSound, 
   playLoseSound, 
@@ -347,6 +347,7 @@ const MemoryPathGame = () => {
           achievements={achievements}
           scores={scores}
           setGameState={setGameState}
+          settings={settings}
         />
       );
     
